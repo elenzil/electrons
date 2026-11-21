@@ -1,0 +1,2 @@
+# Order records (e.g. Mouser BOMs) are worth tracking, despite the repo-wide *.csv ignore.
+!*.csv
