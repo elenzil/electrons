@@ -76,7 +76,16 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        [
+          "silk_edge_clearance|111999999|146405000|a53e9f6b-a128-4b5b-845d-6237f1f4a6db|223d9835-3d14-4ba6-9840-3293585c3f27",
+          ""
+        ],
+        [
+          "silk_edge_clearance|111999999|155595000|a53e9f6b-a128-4b5b-845d-6237f1f4a6db|044ce4f9-67b6-4754-bfac-c4ed0f77288a",
+          ""
+        ]
+      ],
       "meta": {
         "version": 2
       },
@@ -146,7 +155,7 @@
       },
       "rules": {
         "max_error": 0.005,
-        "min_clearance": 0.2,
+        "min_clearance": 0.15,
         "min_connection": 0.0,
         "min_copper_edge_clearance": 0.5,
         "min_groove_width": 0.0,
@@ -159,7 +168,7 @@
         "min_text_height": 0.8,
         "min_text_thickness": 0.08,
         "min_through_hole_diameter": 0.3,
-        "min_track_width": 1.0,
+        "min_track_width": 0.5,
         "min_via_annular_width": 0.1,
         "min_via_diameter": 0.5,
         "solder_mask_to_copper_clearance": 0.0,
@@ -549,7 +558,7 @@
     "page_layout_descr_file": ""
   },
   "schematic": {
-    "annotate_start_num": 9,
+    "annotate_start_num": 10,
     "annotation": {
       "method": 0,
       "sort_order": 0
@@ -678,7 +687,7 @@
         "uuid": "b6f3fb40-f9a8-4acf-9f28-805176430280"
       }
     ],
-    "used_designators": "#FLG1-2,#FLG,#PWR1-2,#PWR,+5V1,C1,C,D1-18,D,GND1,H1-4,H,J1-19,J22,J,Q1,Q,R1-18,R,SW1,SW",
+    "used_designators": "#FLG1-2,#FLG,#PWR1-2,#PWR,+5V1,C1,C11,C,D1-18,D,GND1,H1-4,H11-14,H,J1-22,J,Q1,Q11,Q,R1-21,R,SW1,SW11,SW",
     "variants": []
   },
   "sheets": [

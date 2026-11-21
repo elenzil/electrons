@@ -42,6 +42,10 @@ fp-info-cache
 # Local project settings
 *.kicad_prl
 
+# KiCad backups and unsaved exports (e.g. foo.bak.kicad_pcb, foo-unsaved-export-XXXX.kicad_prl)
+*.bak.*
+*-unsaved-export-*
+
 
 
 

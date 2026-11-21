@@ -114,6 +114,31 @@ The smaller layout was viewed favorably, but it differs from the **earlier reque
 
 **Recommended immediate sequence:** Replace/verify resistor footprints and ratings; review wire terminal drills; decide whether the initial trace/mounting-hole dimensions still apply; run native KiCad schematic and board checks; inspect fabrication outputs; and bench-test incrementally from one LED upward.
 
+## 8. To-do (as of November 19, 2026)
+
+**Now**
+- [ ] LED resistors: move to ≥1 W parts with matching footprints (each 10 Ω currently dissipates ~0.225 W).
+- [ ] Wire pads J10–J17 (and probably J1): enlarge the 0.7 mm drills to ~1.0–1.2 mm for 22 AWG silicone wire.
+- [ ] Re-breadboard and bench-test incrementally, from one LED upward (current, voltage at load, temperatures).
+- [ ] Choose and source LEDs.
+
+- [ ] Route the new USB-C jack J18 (GCT USB4085-GF-A, left edge) and its CC pull-downs R2/R3 (5.1 kΩ); tidy placement and silkscreen. Board widened 10 mm to the left; H1/H4 moved with the edge; board minimum clearance lowered to 0.15 mm for the jack's pins.
+
+**Later**
+- [ ] Review Gerbers and drill files before ordering.
+- [x] Mouser check (Nov 19, via Mouser Search API). PR01 1 W, ±5 %, ~$0.17 each at qty 10, all in stock except as noted:
+  - 10 Ω `PR01000101009JR500` (594-5073NW10R00J): **out of stock**, 20k due Nov 23. In-stock equivalent: `PR01000101009JA500` (594-PR01000101009JA5, ammo pack, same part).
+  - 12 Ω `PR01000101209JR500` (594-5073NW12R00J) · 13 Ω `PR01000101309JR500` (594-5073NW13R00J) · 15 Ω `PR01000101509JR500` (594-5073NW15R00J) · 20 Ω `PR01000102009JR500` (594-5073NW20R00J)
+  - 5.1 Ω `PR01000105108JR500` is available but would overload a 1 W part with these LEDs; don't use it.
+  - Slim (0207) 1 W resistors: only Vishay PR01 found. 1 % version in stock only for 10 Ω (`PR01000101009FR500`, $0.31 at qty 10).
+  - Through-hole, power-only USB-C jacks (in stock): GCT `USB4750-GF-C` (vertical, IP67, $1.61; GCT's spec title says through-hole), Kycon `KUSBV67X-TH-CS-6-BTR` (vertical, IP67, O-ring), TE `2495157-1` (6P waterproof "DIP", orientation unverified). No surface-mount parts. Needs 5.1 kΩ from each CC pin to GND.
+
+**Done**
+- [x] Traces are 1.5 mm (verified in `lamp01_100.kicad_pcb`).
+- [x] Mounting holes: keep 3.2 mm (M3).
+- [x] KiCad ERC, DRC and schematic parity: 0 violations (KiCad 10 `kicad-cli`, November 19).
+- [x] Gitignore KiCad backup and unsaved-export files.
+
 ---
 
 *This is a discussion and design-decision summary, not a substitute for a checked schematic, electrical testing, or a fabrication review. It intentionally excludes packaged project files, board images, and other artifacts.*
