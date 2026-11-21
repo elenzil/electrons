@@ -104,7 +104,7 @@ The smaller layout was viewed favorably, but it differs from the **earlier reque
 - **Editing custom symbols:** Open **Tools → Symbol Editor** from the Schematic Editor, choose the symbol from its custom library, make changes, and save the library. Then use **Tools → Update Symbols from Library** in the schematic to bring existing placed instances up to date.
 - **Footprints are separate:** Use the PCB **Footprint Editor** to edit physical footprints; modifying a schematic symbol does not automatically alter a footprint.
 
-## 7. Current state and next actions
+## 7. Current state and next actions (November 19; superseded by section 8)
 
 **Current intent:** Keep the **single-MOSFET, SPDT ON–ON, 300 kΩ/10 µF** analog fade circuit. Continue with the user's compact **eight-output** KiCad design; populate or connect only the LED branches needed for the porcelain lamp.
 
@@ -114,30 +114,57 @@ The smaller layout was viewed favorably, but it differs from the **earlier reque
 
 **Recommended immediate sequence:** Replace/verify resistor footprints and ratings; review wire terminal drills; decide whether the initial trace/mounting-hole dimensions still apply; run native KiCad schematic and board checks; inspect fabrication outputs; and bench-test incrementally from one LED upward.
 
-## 8. To-do (as of November 19, 2026)
+## 8. Status (as of November 20, 2026): everything ordered
 
-**Now**
-- [ ] LED resistors: move to ≥1 W parts with matching footprints (each 10 Ω currently dissipates ~0.225 W).
-- [ ] Wire pads J10–J17 (and probably J1): enlarge the 0.7 mm drills to ~1.0–1.2 mm for 22 AWG silicone wire.
-- [ ] Re-breadboard and bench-test incrementally, from one LED upward (current, voltage at load, temperatures).
-- [ ] Choose and source LEDs.
+The board, the LEDs and the Mouser components are all on order. Next step is bring-up when they arrive (about a week).
 
-- [ ] Route the new USB-C jack J18 (GCT USB4085-GF-A, left edge) and its CC pull-downs R2/R3 (5.1 kΩ); tidy placement and silkscreen. Board widened 10 mm to the left; H1/H4 moved with the edge; board minimum clearance lowered to 0.15 mm for the jack's pins.
+### Board as ordered (`lamp01_100`, OSH Park standard 2-layer, 3 boards)
 
-**Later**
-- [ ] Review Gerbers and drill files before ordering.
-- [x] Mouser check (Nov 19, via Mouser Search API). PR01 1 W, ±5 %, ~$0.17 each at qty 10, all in stock except as noted:
-  - 10 Ω `PR01000101009JR500` (594-5073NW10R00J): **out of stock**, 20k due Nov 23. In-stock equivalent: `PR01000101009JA500` (594-PR01000101009JA5, ammo pack, same part).
-  - 12 Ω `PR01000101209JR500` (594-5073NW12R00J) · 13 Ω `PR01000101309JR500` (594-5073NW13R00J) · 15 Ω `PR01000101509JR500` (594-5073NW15R00J) · 20 Ω `PR01000102009JR500` (594-5073NW20R00J)
-  - 5.1 Ω `PR01000105108JR500` is available but would overload a 1 W part with these LEDs; don't use it.
-  - Slim (0207) 1 W resistors: only Vishay PR01 found. 1 % version in stock only for 10 Ω (`PR01000101009FR500`, $0.31 at qty 10).
-  - Through-hole, power-only USB-C jacks (in stock): GCT `USB4750-GF-C` (vertical, IP67, $1.61; GCT's spec title says through-hole), Kycon `KUSBV67X-TH-CS-6-BTR` (vertical, IP67, O-ring), TE `2495157-1` (6P waterproof "DIP", orientation unverified). No surface-mount parts. Needs 5.1 kΩ from each CC pin to GND.
+- **Size and layers:** 67.5 × 31.1 mm, 2 layers, rounded corners, four 3.2 mm (M3) mounting holes.
+- **Circuit:** unchanged. Single IRLZ44N MOSFET, SPDT ON–ON switch (off-board, via J2), 300 kΩ / 10 µF fade network, 8 LED outputs (J10–J17), each with its own resistor.
+- **LED resistors R10–R17:** Vishay PR01 1 W metal film. It has the same slim 0207 body as a ¼ W part, so the original footprints fit.
+- **Wire pads:**
+  - J10–J17 and J2: 1.15 mm holes, for 22 AWG silicone wire.
+  - J1: 2.15 mm holes, unchanged. Now a backup power input.
+- **Power input:** on-board USB-C jack J18 (GCT USB4085-GF-A, through-hole, left edge). R2/R3 (5.1 kΩ) on CC1/CC2 make chargers supply 5 V. The HUSB238 module is no longer needed.
+  - The charger must offer at least 1.5 A at 5 V.
+- **Traces:** 1.5 mm for main power, necking to 0.5 mm at the jack pins.
+- **Clearance:** board minimum lowered to 0.15 mm for the jack's pin pitch. OSH Park accepted it.
+- **Logos:** gold (exposed copper) unicorn logos on the front and back. The footprint library is `logos.pretty`, and `logos/make_logo.py` regenerates it at any size.
+- **Checks:** ERC, DRC and schematic parity are clean apart from 2 cosmetic silkscreen-at-edge warnings at the jack.
+- **Fabrication:** OSH Park parsed the `.kicad_pcb` directly and detected the jack's plated slots.
 
-**Done**
-- [x] Traces are 1.5 mm (verified in `lamp01_100.kicad_pcb`).
-- [x] Mounting holes: keep 3.2 mm (M3).
-- [x] KiCad ERC, DRC and schematic parity: 0 violations (KiCad 10 `kicad-cli`, November 19).
-- [x] Gitignore KiCad backup and unsaved-export files.
+### Orders
+
+- **PCB:** OSH Park, 3 boards. Snapshot images are in `lamp01/orders/20261120/`.
+- **Components:** Mouser, per `lamp01/orders/20261120/mouser_bom.xlsx`:
+  - PR01 1 W resistors at 10 / 12 / 13 / 15 / 20 Ω
+  - 5.1 kΩ and 300 kΩ resistors
+  - C1 capacitors at 4.7 / 10 / 22 / 47 µF, for different fade speeds
+  - USB4085 jacks
+  - E-Switch 100SP1T1B1M1QEH toggles
+- **LEDs:** LuxeonStar, 2 × **SW-08-T1** (4 × LUXEON Rebel Plus each, 2700 K, CRI 80), "No Connectors", plus LXT-SR08-12 thermal tape.
+  - Each module has separate anode and cathode pads for D1–D4, so it works with the per-LED resistors.
+- **Ordering lessons:** see `lamp01/orders/NOTES.md`.
+
+### Bring-up plan
+
+1. Fit **13 Ω** for R10–R17. With the Rebel Plus at about 2.75 V, that gives about 170 mA per LED and about 0.37 W per resistor.
+   - The 2.75 V is an estimate. Check it against the voltage-vs-current curve in datasheet DS107.
+2. Solder and test **one LED** first. About 2.2 V across its 13 Ω resistor means about 170 mA.
+3. Add LEDs one at a time. Each time, measure the board's supply voltage, the total current and the temperatures.
+   - Use 12 Ω for brighter, or 15 / 20 Ω for dimmer.
+4. **Wiring:**
+   - On each module, join the 4 cathodes into one return wire. The return goes to any J10–J17 pin 2; they're all the shared MOSFET drain.
+   - The 4 anodes go to separate outputs.
+5. Mount the modules on aluminum with the thermal tape before running them for long periods. Each module makes about 2 W of heat.
+6. Try other C1 values if you want a different fade speed. The time constant is 300 kΩ × C1: about 1.4 s at 4.7 µF, 3 s at 10 µF, 6.6 s at 22 µF and 14 s at 47 µF.
+
+### Open
+
+- [ ] Bring-up and full-load test in the lamp: current, voltage drop, resistor and LED temperatures.
+- [ ] Mounting hardware and LED heat-sinking inside the porcelain.
+- [ ] Regenerate `lamp01_100.ply` / `.stl` if they're needed for the enclosure. They predate the USB-C jack and the wider board.
 
 ---
 
